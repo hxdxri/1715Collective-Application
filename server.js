@@ -5,7 +5,7 @@ const { URL } = require("url");
 const https = require("https");
 
 const PORT = process.env.PORT || 3000;
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, "docs");
 
 const TEST_RECIPIENT = "hxidari@gmail.com";
 const PROD_RECIPIENT = "Just1715related@icloud.com";
