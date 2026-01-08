@@ -1,13 +1,14 @@
 const form = document.getElementById("applicationForm");
 const steps = Array.from(document.querySelectorAll(".form-step"));
-const progressFill = document.getElementById("progressFill");
 const progressLabel = document.getElementById("progressLabel");
 const sectionLabel = document.getElementById("sectionLabel");
 const progressDots = Array.from(document.querySelectorAll(".progress-dot"));
+const actions = document.getElementById("formActions");
 const backBtn = document.getElementById("backBtn");
 const nextBtn = document.getElementById("nextBtn");
 const submitBtn = document.getElementById("submitBtn");
 const confirmation = document.getElementById("confirmation");
+const submitError = document.getElementById("submitError");
 const storageKey = "collectiveApplicationState";
 
 const sectionNames = [
@@ -15,7 +16,6 @@ const sectionNames = [
   "Brand Identity & Alignment",
   "Products & Showcase",
   "Participation & Logistics",
-  "Package Selection",
   "Promotion & Content",
   "Final Confirmation",
 ];
@@ -26,14 +26,17 @@ const updateProgress = () => {
   const stepNumber = currentStep + 1;
   progressLabel.textContent = `Step ${stepNumber} of ${steps.length}`;
   sectionLabel.textContent = sectionNames[currentStep];
-  progressFill.style.width = `${(stepNumber / steps.length) * 100}%`;
   progressDots.forEach((dot, index) => {
     dot.classList.toggle("active", index <= currentStep);
   });
 
+  backBtn.hidden = currentStep === 0;
   backBtn.disabled = currentStep === 0;
   nextBtn.hidden = currentStep === steps.length - 1;
   submitBtn.hidden = currentStep !== steps.length - 1;
+  if (actions) {
+    actions.classList.toggle("single", currentStep === 0);
+  }
 };
 
 const showStep = (index) => {
@@ -71,6 +74,23 @@ const saveState = () => {
   });
   payload.currentStep = currentStep;
   localStorage.setItem(storageKey, JSON.stringify(payload));
+};
+
+const serializeForm = () => {
+  const data = new FormData(form);
+  const payload = {};
+  data.forEach((value, key) => {
+    if (payload[key]) {
+      if (Array.isArray(payload[key])) {
+        payload[key].push(value);
+      } else {
+        payload[key] = [payload[key], value];
+      }
+    } else {
+      payload[key] = value;
+    }
+  });
+  return payload;
 };
 
 const restoreState = () => {
@@ -128,6 +148,13 @@ const toggleWebsiteFields = () => {
   instagramWrap.hidden = choice !== "instagram";
 };
 
+const togglePromoInstagramField = () => {
+  const promoField = document.getElementById("promoInstagramField");
+  const instagramHandle = document.getElementById("instagramHandle");
+  if (!promoField || !instagramHandle) return;
+  promoField.hidden = instagramHandle.value.trim().length > 0;
+};
+
 const updateCounters = () => {
   document.querySelectorAll("textarea[maxlength]").forEach((area) => {
     const counter = document.querySelector(`[data-counter-for="${area.id}"]`);
@@ -150,6 +177,9 @@ nextBtn.addEventListener("click", () => {
 form.addEventListener("input", (event) => {
   if (event.target.matches("textarea[maxlength]")) {
     updateCounters();
+  }
+  if (event.target.id === "instagramHandle") {
+    togglePromoInstagramField();
   }
   saveState();
 });
@@ -184,18 +214,36 @@ if (instagramField) {
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+  if (submitError) submitError.textContent = "";
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting...";
 
-  setTimeout(() => {
-    form.hidden = true;
-    confirmation.hidden = false;
-    localStorage.removeItem(storageKey);
-  }, 900);
+  fetch("/api/apply", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(serializeForm()),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Submission failed. Please try again.");
+      }
+      return response.json();
+    })
+    .then(() => {
+      form.hidden = true;
+      confirmation.hidden = false;
+      localStorage.removeItem(storageKey);
+    })
+    .catch((error) => {
+      if (submitError) submitError.textContent = error.message;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Application";
+    });
 });
 
 updateCounters();
 restoreState();
 toggleWebsiteFields();
+togglePromoInstagramField();
 showStep(currentStep);

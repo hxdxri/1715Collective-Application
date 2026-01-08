@@ -4,41 +4,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>1715 Collective Brand Application</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="1715-logo-icon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="1715-logo-icon-192.png" />
+    <link rel="apple-touch-icon" href="1715-logo-icon-180.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app">
       <header class="hero">
-        <p class="eyebrow">1715 Collective</p>
-        <h1>Brand Registration Application</h1>
+        <div class="hero-band">
+          <p class="eyebrow">1715 Collective</p>
+          <h1>Brand Registration Application</h1>
+        </div>
         <p class="lede">
           Apply to join the 1715 Collective. Estimated completion time: <strong>3–5 minutes</strong>.
         </p>
-      </header>
-
-      <section class="card" aria-live="polite">
-        <div class="progress" role="group" aria-label="Application progress">
-          <div class="progress-bar" aria-hidden="true">
-            <span class="progress-fill" id="progressFill"></span>
+        <div class="hero-cards">
+          <div class="hero-card">
+            <h3>Location</h3>
+            <p>TBD — City venue (details shared upon selection)</p>
           </div>
-          <div class="progress-steps" aria-hidden="true">
-            <span class="progress-dot"></span>
-            <span class="progress-dot"></span>
-            <span class="progress-dot"></span>
-            <span class="progress-dot"></span>
-            <span class="progress-dot"></span>
-            <span class="progress-dot"></span>
-            <span class="progress-dot"></span>
+          <div class="hero-card">
+            <h3>Dates</h3>
+            <p>TBD — Event window to be announced</p>
           </div>
-          <div class="progress-meta">
-            <span id="progressLabel">Step 1 of 7</span>
-            <span id="sectionLabel">Brand Information</span>
+          <div class="hero-card">
+            <h3>Questions?</h3>
+            <p><a href="mailto:hello@1715collective.com">hello@1715collective.com</a></p>
           </div>
         </div>
+      </header>
 
+      <div class="progress" role="group" aria-label="Application progress">
+        <div class="progress-steps" aria-hidden="true">
+          <span class="progress-dot"></span>
+          <span class="progress-dot"></span>
+          <span class="progress-dot"></span>
+          <span class="progress-dot"></span>
+          <span class="progress-dot"></span>
+          <span class="progress-dot"></span>
+        </div>
+        <div class="progress-meta">
+          <span id="progressLabel">Step 1 of 6</span>
+          <span id="sectionLabel">Brand Information</span>
+        </div>
+      </div>
+
+      <section class="card" aria-live="polite">
         <form id="applicationForm" novalidate>
           <section class="form-step" data-step="1">
-            <h2>Section 1 — Brand Information</h2>
+            <h2>Brand Information</h2>
 
             <label for="brandName">Brand Name<span class="req">*</span></label>
             <input id="brandName" name="brandName" type="text" minlength="2" required />
@@ -67,34 +82,44 @@
               <p class="helper">Choose one and enter the relevant link or handle.</p>
             </fieldset>
 
-            <label for="countryCity">Country / City</label>
-            <input id="countryCity" name="countryCity" type="text" list="citySuggestions" placeholder="Start typing a city" />
-            <datalist id="citySuggestions">
-              <option value="Lagos"></option>
-              <option value="London"></option>
-              <option value="New York"></option>
-              <option value="Los Angeles"></option>
-              <option value="Toronto"></option>
-              <option value="Johannesburg"></option>
-              <option value="Accra"></option>
-              <option value="Paris"></option>
-              <option value="Nairobi"></option>
-            </datalist>
+            <div class="row">
+              <div>
+                <label for="countryCity">Country / City</label>
+                <select id="countryCity" name="countryCity">
+                  <option value="" selected>Select a location</option>
+                  <option value="Lagos">Lagos</option>
+                  <option value="London">London</option>
+                  <option value="New York">New York</option>
+                  <option value="Los Angeles">Los Angeles</option>
+                  <option value="Toronto">Toronto</option>
+                  <option value="Johannesburg">Johannesburg</option>
+                  <option value="Accra">Accra</option>
+                  <option value="Paris">Paris</option>
+                  <option value="Nairobi">Nairobi</option>
+                </select>
+              </div>
+              <div>
+                <label for="yearEstablished">Year Established</label>
+                <input id="yearEstablished" name="yearEstablished" type="number" inputmode="numeric" min="1000" max="9999" />
+                <p class="field-error" data-error-for="yearEstablished"></p>
+              </div>
+            </div>
 
-            <label for="yearEstablished">Year Established</label>
-            <input id="yearEstablished" name="yearEstablished" type="number" inputmode="numeric" min="1000" max="9999" />
-            <p class="field-error" data-error-for="yearEstablished"></p>
-
-            <label for="primaryContact">Primary Contact Name</label>
-            <input id="primaryContact" name="primaryContact" type="text" />
-
-            <label for="contactEmail">Contact Email<span class="req">*</span></label>
-            <input id="contactEmail" name="contactEmail" type="email" required />
-            <p class="field-error" data-error-for="contactEmail"></p>
+            <div class="row">
+              <div>
+                <label for="primaryContact">Primary Contact Name</label>
+                <input id="primaryContact" name="primaryContact" type="text" />
+              </div>
+              <div>
+                <label for="contactEmail">Contact Email<span class="req">*</span></label>
+                <input id="contactEmail" name="contactEmail" type="email" required />
+                <p class="field-error" data-error-for="contactEmail"></p>
+              </div>
+            </div>
           </section>
 
-          <section class="form-step" data-step="2" hidden>
-            <h2>Section 2 — Brand Identity &amp; Alignment</h2>
+          <section class="form-step compact" data-step="2" hidden>
+            <h2>Brand Identity &amp; Alignment</h2>
 
             <fieldset>
               <legend>Brand Category (select all that apply)</legend>
@@ -132,7 +157,7 @@
           </section>
 
           <section class="form-step" data-step="3" hidden>
-            <h2>Section 3 — Products &amp; Showcase</h2>
+            <h2>Products &amp; Showcase</h2>
 
             <label for="productsShowcase">Products to be showcased<span class="req">*</span></label>
             <textarea id="productsShowcase" name="productsShowcase" rows="4" required
@@ -149,7 +174,7 @@
           </section>
 
           <section class="form-step" data-step="4" hidden>
-            <h2>Section 4 — Participation &amp; Logistics</h2>
+            <h2>Participation &amp; Logistics</h2>
 
             <fieldset>
               <legend>Attendance</legend>
@@ -173,17 +198,9 @@
           </section>
 
           <section class="form-step" data-step="5" hidden>
-            <h2>Section 5 — Package Selection</h2>
+            <h2>Promotion &amp; Content</h2>
 
-            <fieldset>
-              <legend>Package Type</legend>
-              <label class="check"><input type="radio" name="packageType" value="Standard Showcase" required />Standard Showcase</label>
-            </fieldset>
-            <p class="field-error" data-error-for="packageType"></p>
-          </section>
-
-          <section class="form-step" data-step="6" hidden>
-            <h2>Section 6 — Promotion &amp; Content</h2>
+            <div class="notice">Package: Standard Showcase</div>
 
             <fieldset>
               <legend>Open to pre-event feature?<span class="req">*</span></legend>
@@ -192,9 +209,11 @@
             </fieldset>
             <p class="field-error" data-error-for="preEventFeature"></p>
 
-            <label for="brandInstagram">Brand Instagram Handle<span class="req">*</span></label>
-            <input id="brandInstagram" name="brandInstagram" type="text" required placeholder="@yourbrand" />
-            <p class="field-error" data-error-for="brandInstagram"></p>
+            <div id="promoInstagramField">
+              <label for="brandInstagram">Brand Instagram Handle<span class="req">*</span></label>
+              <input id="brandInstagram" name="brandInstagram" type="text" required placeholder="@yourbrand" />
+              <p class="field-error" data-error-for="brandInstagram"></p>
+            </div>
 
             <label for="followerCount">Follower Count <span class="muted">(optional)</span></label>
             <div class="inline">
@@ -203,8 +222,8 @@
             </div>
           </section>
 
-          <section class="form-step" data-step="7" hidden>
-            <h2>Section 7 — Final Confirmation</h2>
+          <section class="form-step" data-step="6" hidden>
+            <h2>Final Confirmation</h2>
 
             <label class="check">
               <input type="checkbox" id="acknowledgement" name="acknowledgement" required />
@@ -218,11 +237,12 @@
           </section>
 
 
-          <div class="actions">
+          <div class="actions" id="formActions">
             <button type="button" id="backBtn" class="ghost" disabled>Back</button>
             <button type="button" id="nextBtn">Next</button>
             <button type="submit" id="submitBtn" class="primary" hidden>Submit Application</button>
           </div>
+          <p id="submitError" class="field-error" role="status"></p>
         </form>
 
         <section id="confirmation" class="confirmation" hidden>
@@ -234,6 +254,10 @@
         </section>
       </section>
     </main>
+
+    <div class="corner-label left" aria-hidden="true">1715</div>
+    <div class="corner-label right" aria-hidden="true">1715</div>
+    <div class="side-mark" aria-hidden="true">1715 Collective</div>
 
     <script src="script.js"></script>
   </body>

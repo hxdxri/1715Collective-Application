@@ -1,16 +1,17 @@
 :root {
   color-scheme: light;
-  --bg: #f6f1ea;
-  --ink: #1e1a16;
-  --muted: #5a5148;
-  --accent: #b8743a;
-  --accent-dark: #7a4b22;
-  --card: #fff8f1;
-  --line: #e1d4c5;
+  --bg: #f2efe9;
+  --ink: #151515;
+  --muted: #6a655f;
+  --accent: #101010;
+  --accent-dark: #0b0b0b;
+  --card: #fdfbf7;
+  --line: #dcd6cf;
   --danger: #b34030;
-  --success: #2d7a55;
-  --shadow: 0 24px 60px rgba(35, 24, 16, 0.12);
-  font-family: "Neue Machina", "Space Grotesk", "Satoshi", "IBM Plex Sans", sans-serif;
+  --success: #1f7a4f;
+  --shadow: 0 28px 70px rgba(17, 17, 17, 0.12);
+  --glow: 0 10px 30px rgba(16, 16, 16, 0.08);
+  font-family: "Space Grotesk", "Manrope", "Satoshi", "Helvetica Neue", "Arial Narrow", sans-serif;
 }
 
 * {
@@ -19,95 +20,188 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #fff2e4 0%, #f6f1ea 40%, #efe7de 100%);
+  background:
+    linear-gradient(120deg, rgba(15, 15, 15, 0.04) 0%, transparent 60%),
+    repeating-linear-gradient(
+      135deg,
+      rgba(18, 18, 18, 0.05) 0px,
+      rgba(18, 18, 18, 0.05) 1px,
+      transparent 1px,
+      transparent 14px
+    ),
+    repeating-linear-gradient(
+      -135deg,
+      rgba(18, 18, 18, 0.03) 0px,
+      rgba(18, 18, 18, 0.03) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    linear-gradient(135deg, #f7f3ee 0%, #efe9e1 55%, #f9f6f0 100%);
   color: var(--ink);
 }
 
 .app {
   min-height: 100vh;
-  padding: 32px 16px 56px;
+  padding: 40px 20px 72px;
 }
 
 .hero {
-  max-width: 760px;
-  margin: 0 auto 24px;
+  max-width: 900px;
+  margin: 0 auto 28px;
+}
+
+.hero-band {
+  width: 100%;
+  background: #111010;
+  color: #f5f2ed;
+  padding: 28px 16px 22px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 8px;
+  color: rgba(245, 242, 237, 0.7);
+  margin-bottom: 0;
 }
 
 h1 {
   font-size: clamp(2rem, 4vw, 3rem);
-  margin: 0 0 12px;
+  margin: 0;
+  font-weight: 500;
 }
 
 .lede {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--muted);
+  margin: 16px 0 0;
+  font-size: 1.05rem;
+  color: rgba(21, 21, 21, 0.55);
+  font-style: italic;
 }
 
+.hero-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.hero-card {
+  background: #f7f3ee;
+  border-radius: 16px;
+  padding: 14px 16px;
+  border: 1px solid rgba(21, 21, 21, 0.08);
+}
+
+.hero-card h3 {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(21, 21, 21, 0.6);
+  font-weight: 500;
+}
+
+.hero-card p {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(21, 21, 21, 0.85);
+}
+
+.hero-card a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(21, 21, 21, 0.2);
+}
+
+.corner-label {
+  position: fixed;
+  bottom: 18px;
+  font-size: 1.1rem;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  font-family: "Arial Black", "Avenir Next Condensed", "Impact", sans-serif;
+  color: rgba(21, 21, 21, 0.5);
+  pointer-events: none;
+}
+
+.corner-label.left {
+  left: 18px;
+  opacity: 0.25;
+}
+
+.corner-label.right {
+  right: 18px;
+  opacity: 0.7;
+}
+
+.side-mark {
+  position: fixed;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 2.2rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-family: "Arial Black", "Avenir Next Condensed", "Impact", sans-serif;
+  color: rgba(21, 21, 21, 0.7);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 4;
+}
 .card {
-  max-width: 760px;
+  max-width: 900px;
   margin: 0 auto;
   background: var(--card);
   border-radius: 24px;
-  padding: 24px;
+  padding: 28px;
   box-shadow: var(--shadow);
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
 }
 
 .progress {
-  position: sticky;
-  top: 16px;
-  background: var(--card);
-  z-index: 2;
-  padding-bottom: 16px;
-}
-
-.progress-bar {
-  height: 6px;
-  background: #e9ddcf;
-  border-radius: 999px;
-  overflow: hidden;
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+  margin: 0 auto 24px;
+  padding: 10px 0;
+  background: transparent;
 }
 
 .progress-steps {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-top: 10px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .progress-dot {
   height: 6px;
   border-radius: 999px;
-  background: #e9ddcf;
+  background: #ded8d0;
 }
 
 .progress-dot.active {
   background: var(--accent);
 }
 
-.progress-fill {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #d49a63, #b8743a);
-  transition: width 0.3s ease;
-}
-
 .progress-meta {
   display: flex;
   justify-content: space-between;
-  margin-top: 12px;
-  font-size: 0.9rem;
+  margin-top: 10px;
+  font-size: 0.85rem;
   color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 form {
@@ -120,28 +214,79 @@ form {
   gap: 14px;
 }
 
+.form-step.compact {
+  gap: 8px;
+}
+
+.form-step.compact label {
+  margin-top: 2px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
 .form-step[hidden] {
   display: none;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 label {
-  font-weight: 600;
+  font-weight: 400;
+  color: rgba(21, 21, 21, 0.75);
   display: block;
 }
 
 input,
 textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  font-size: 1rem;
+  font-size: 1.05rem;
   background: #fff;
   color: var(--ink);
 }
 
+input[type="number"] {
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font-size: 1.05rem;
+  background: #fff;
+  color: var(--ink);
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%),
+    linear-gradient(to right, #fff, #fff);
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px), 100% 0;
+  background-size: 5px 5px, 5px 5px, 2.5em 100%;
+  background-repeat: no-repeat;
+}
+
 input:focus,
 textarea:focus {
+  outline: 2px solid #e6b384;
+  border-color: transparent;
+}
+
+select:focus {
   outline: 2px solid #e6b384;
   border-color: transparent;
 }
@@ -165,7 +310,7 @@ fieldset {
 .segmented-option {
   padding: 8px 16px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--muted);
 }
 
@@ -191,14 +336,14 @@ fieldset {
 
 legend {
   padding: 0 8px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .check {
   display: flex;
   gap: 10px;
   align-items: center;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .check input {
@@ -232,9 +377,11 @@ legend {
 .notice {
   padding: 12px 14px;
   border-radius: 12px;
-  background: #f4e2d1;
-  color: #7a3a1b;
-  font-weight: 600;
+  background: #efebe6;
+  color: #2c2b29;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .actions {
@@ -244,13 +391,17 @@ legend {
   margin-top: 8px;
 }
 
+.actions.single {
+  justify-content: flex-end;
+}
+
 button {
   border: none;
-  padding: 12px 18px;
+  padding: 14px 20px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 button.primary {
@@ -266,7 +417,8 @@ button.primary:disabled {
 button.ghost {
   background: transparent;
   border: 1px solid var(--line);
-  color: var(--ink);
+  color: rgba(21, 21, 21, 0.55);
+  font-weight: 400;
 }
 
 .inline {
@@ -282,7 +434,7 @@ button.ghost {
   background: #e9ddcf;
   display: grid;
   place-items: center;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--accent-dark);
 }
 
@@ -294,16 +446,18 @@ button.ghost {
 .tooltip[aria-label]:focus::after {
   content: attr(aria-label);
   position: absolute;
-  bottom: calc(100% + 8px);
-  right: 0;
-  width: 220px;
-  background: #fff;
-  border: 1px solid var(--line);
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240px;
+  background: #111;
+  border: 1px solid #111;
   border-radius: 12px;
   padding: 10px;
   font-size: 0.8rem;
-  color: var(--muted);
+  color: #fff;
   box-shadow: var(--shadow);
+  z-index: 5;
 }
 
 .confirmation {
@@ -337,6 +491,10 @@ button.ghost {
 
 .muted {
   color: var(--muted);
+  font-weight: 400;
+}
+
+strong {
   font-weight: 500;
 }
 
@@ -347,7 +505,15 @@ button.ghost {
 
 @media (max-width: 640px) {
   .card {
-    padding: 20px;
+    padding: 22px;
+  }
+
+  .hero-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
   }
 
   .actions {
