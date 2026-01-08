@@ -3,6 +3,7 @@ const steps = Array.from(document.querySelectorAll(".form-step"));
 const progressFill = document.getElementById("progressFill");
 const progressLabel = document.getElementById("progressLabel");
 const sectionLabel = document.getElementById("sectionLabel");
+const progressDots = Array.from(document.querySelectorAll(".progress-dot"));
 const backBtn = document.getElementById("backBtn");
 const nextBtn = document.getElementById("nextBtn");
 const submitBtn = document.getElementById("submitBtn");
@@ -26,6 +27,9 @@ const updateProgress = () => {
   progressLabel.textContent = `Step ${stepNumber} of ${steps.length}`;
   sectionLabel.textContent = sectionNames[currentStep];
   progressFill.style.width = `${(stepNumber / steps.length) * 100}%`;
+  progressDots.forEach((dot, index) => {
+    dot.classList.toggle("active", index <= currentStep);
+  });
 
   backBtn.disabled = currentStep === 0;
   nextBtn.hidden = currentStep === steps.length - 1;
@@ -40,137 +44,15 @@ const showStep = (index) => {
   updateProgress();
 };
 
-const setError = (fieldName, message) => {
-  const errorEl = document.querySelector(`[data-error-for="${fieldName}"]`);
-  if (errorEl) {
-    errorEl.textContent = message;
-  }
-};
-
 const clearErrors = (stepEl) => {
   stepEl.querySelectorAll("[data-error-for]").forEach((el) => {
     el.textContent = "";
   });
 };
 
-const isValidUrl = (value) => {
-  try {
-    const withScheme = value.startsWith("http") ? value : `https://${value}`;
-    const url = new URL(withScheme);
-    return Boolean(url.hostname.includes("."));
-  } catch (error) {
-    return false;
-  }
-};
-
 const validateStep = (stepEl) => {
   clearErrors(stepEl);
-  let valid = true;
-
-  if (stepEl.dataset.step === "1") {
-    const brandName = form.brandName.value.trim();
-    if (brandName.length < 2) {
-      setError("brandName", "Brand name must be at least 2 characters.");
-      valid = false;
-    }
-
-    const website = form.websiteOrInstagram.value.trim();
-    if (!website) {
-      setError("websiteOrInstagram", "Please provide a website or Instagram handle.");
-      valid = false;
-    } else if (!(website.startsWith("@") || isValidUrl(website) || website.includes("instagram.com"))) {
-      setError("websiteOrInstagram", "Enter a valid URL or Instagram handle.");
-      valid = false;
-    }
-
-    const year = form.yearEstablished.value.trim();
-    if (year && !/^\d{4}$/.test(year)) {
-      setError("yearEstablished", "Enter a 4-digit year.");
-      valid = false;
-    }
-
-    const email = form.contactEmail.value.trim();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("contactEmail", "Enter a valid email address.");
-      valid = false;
-    }
-  }
-
-  if (stepEl.dataset.step === "2") {
-    const description = form.brandDescription.value.trim();
-    const distinct = form.brandDistinct.value.trim();
-    const why = form.brandWhy.value.trim();
-
-    if (!description) {
-      setError("brandDescription", "Please add a brief brand description.");
-      valid = false;
-    }
-    if (!distinct) {
-      setError("brandDistinct", "Please share what makes your brand distinct.");
-      valid = false;
-    }
-    if (!why) {
-      setError("brandWhy", "Please share why you want to join the collective.");
-      valid = false;
-    }
-  }
-
-  if (stepEl.dataset.step === "3") {
-    if (!form.productsShowcase.value.trim()) {
-      setError("productsShowcase", "Please list the products to be showcased.");
-      valid = false;
-    }
-    if (!form.priceRange.value.trim()) {
-      setError("priceRange", "Please provide an average price range.");
-      valid = false;
-    }
-    if (!form.skuCount.value.trim()) {
-      setError("skuCount", "Please estimate your SKU count.");
-      valid = false;
-    }
-  }
-
-  if (stepEl.dataset.step === "4") {
-    const attendance = form.querySelector("input[name='attendance']:checked");
-    if (!attendance) {
-      setError("attendance", "Please select your attendance preference.");
-      valid = false;
-    }
-  }
-
-  if (stepEl.dataset.step === "5") {
-    const packageType = form.querySelector("input[name='packageType']:checked");
-    if (!packageType) {
-      setError("packageType", "Please select a package type.");
-      valid = false;
-    }
-  }
-
-  if (stepEl.dataset.step === "6") {
-    const preEvent = form.querySelector("input[name='preEventFeature']:checked");
-    if (!preEvent) {
-      setError("preEventFeature", "Please select yes or no.");
-      valid = false;
-    }
-
-    const instagram = form.brandInstagram.value.trim();
-    if (!instagram) {
-      setError("brandInstagram", "Please provide your Instagram handle.");
-      valid = false;
-    } else if (!instagram.startsWith("@")) {
-      setError("brandInstagram", "Instagram handle should start with @.");
-      valid = false;
-    }
-  }
-
-  if (stepEl.dataset.step === "7") {
-    if (!form.acknowledgement.checked) {
-      setError("acknowledgement", "You must acknowledge this to submit.");
-      valid = false;
-    }
-  }
-
-  return valid;
+  return true;
 };
 
 const saveState = () => {
@@ -232,7 +114,18 @@ const toggleOtherFields = () => {
 
   const requirementsOther = document.getElementById("requirementsOther");
   const requirementsOtherText = document.getElementById("requirementsOtherText");
-  requirementsOtherText.hidden = !requirementsOther.checked;
+  if (requirementsOther && requirementsOtherText) {
+    requirementsOtherText.hidden = !requirementsOther.checked;
+  }
+};
+
+const toggleWebsiteFields = () => {
+  const websiteWrap = document.getElementById("websiteInputWrap");
+  const instagramWrap = document.getElementById("instagramInputWrap");
+  const selection = form.querySelector("input[name='websiteType']:checked");
+  const choice = selection ? selection.value : "website";
+  websiteWrap.hidden = choice !== "website";
+  instagramWrap.hidden = choice !== "instagram";
 };
 
 const updateCounters = () => {
@@ -244,23 +137,14 @@ const updateCounters = () => {
   });
 };
 
-const normalizeInstagram = (input) => {
-  const value = input.value.trim();
-  if (!value) return;
-  if (!value.startsWith("@")) {
-    input.value = `@${value.replace(/^@+/, "")}`;
-  }
-};
-
 backBtn.addEventListener("click", () => {
   showStep(Math.max(0, currentStep - 1));
 });
 
 nextBtn.addEventListener("click", () => {
   const stepEl = steps[currentStep];
-  if (validateStep(stepEl)) {
-    showStep(Math.min(steps.length - 1, currentStep + 1));
-  }
+  validateStep(stepEl);
+  showStep(Math.min(steps.length - 1, currentStep + 1));
 });
 
 form.addEventListener("input", (event) => {
@@ -274,34 +158,32 @@ form.addEventListener("change", (event) => {
   if (event.target.id === "brandCategoryOther" || event.target.id === "requirementsOther") {
     toggleOtherFields();
   }
-  saveState();
-});
-
-form.brandInstagram.addEventListener("blur", () => {
-  normalizeInstagram(form.brandInstagram);
-  saveState();
-});
-
-form.websiteOrInstagram.addEventListener("blur", () => {
-  const value = form.websiteOrInstagram.value.trim();
-  if (value.startsWith("@")) {
-    saveState();
+  if (event.target.name === "websiteType") {
+    toggleWebsiteFields();
   }
+  saveState();
 });
+
+const normalizeInstagramHandle = () => {
+  const instagramField = document.getElementById("brandInstagram");
+  if (!instagramField) return;
+  const value = instagramField.value.trim();
+  if (!value) return;
+  if (!value.startsWith("@")) {
+    instagramField.value = `@${value.replace(/^@+/, "")}`;
+  }
+};
+
+const instagramField = document.getElementById("brandInstagram");
+if (instagramField) {
+  instagramField.addEventListener("blur", () => {
+    normalizeInstagramHandle();
+    saveState();
+  });
+}
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  let firstInvalidIndex = -1;
-  steps.forEach((step, index) => {
-    const isValid = validateStep(step);
-    if (!isValid && firstInvalidIndex === -1) {
-      firstInvalidIndex = index;
-    }
-  });
-  if (firstInvalidIndex !== -1) {
-    showStep(firstInvalidIndex);
-    return;
-  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting...";
@@ -315,4 +197,5 @@ form.addEventListener("submit", (event) => {
 
 updateCounters();
 restoreState();
+toggleWebsiteFields();
 showStep(currentStep);

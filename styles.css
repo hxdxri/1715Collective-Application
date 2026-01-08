@@ -77,6 +77,23 @@ h1 {
   overflow: hidden;
 }
 
+.progress-steps {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.progress-dot {
+  height: 6px;
+  border-radius: 999px;
+  background: #e9ddcf;
+}
+
+.progress-dot.active {
+  background: var(--accent);
+}
+
 .progress-fill {
   display: block;
   height: 100%;
@@ -101,6 +118,10 @@ form {
 .form-step {
   display: grid;
   gap: 14px;
+}
+
+.form-step[hidden] {
+  display: none;
 }
 
 label {
@@ -131,6 +152,41 @@ fieldset {
   padding: 16px;
   display: grid;
   gap: 10px;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.segmented-option {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.segmented-option input {
+  display: none;
+}
+
+.segmented-option:has(input:checked) {
+  background: #f1e3d6;
+  color: var(--ink);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 legend {

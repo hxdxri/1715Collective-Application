@@ -21,6 +21,15 @@
           <div class="progress-bar" aria-hidden="true">
             <span class="progress-fill" id="progressFill"></span>
           </div>
+          <div class="progress-steps" aria-hidden="true">
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+          </div>
           <div class="progress-meta">
             <span id="progressLabel">Step 1 of 7</span>
             <span id="sectionLabel">Brand Information</span>
@@ -35,13 +44,42 @@
             <input id="brandName" name="brandName" type="text" minlength="2" required />
             <p class="field-error" data-error-for="brandName"></p>
 
-            <label for="websiteOrInstagram">Website or Instagram<span class="req">*</span></label>
-            <input id="websiteOrInstagram" name="websiteOrInstagram" type="text" required />
-            <p class="helper">Enter a URL or an Instagram handle (e.g. @brand).</p>
-            <p class="field-error" data-error-for="websiteOrInstagram"></p>
+            <fieldset>
+              <legend>Website or Instagram<span class="req">*</span></legend>
+              <div class="segmented">
+                <label class="segmented-option">
+                  <input type="radio" name="websiteType" value="website" checked />
+                  Website
+                </label>
+                <label class="segmented-option">
+                  <input type="radio" name="websiteType" value="instagram" />
+                  Instagram
+                </label>
+              </div>
+              <div id="websiteInputWrap">
+                <label for="websiteUrl" class="sr-only">Website URL</label>
+                <input id="websiteUrl" name="websiteUrl" type="url" placeholder="https://yourbrand.com" />
+              </div>
+              <div id="instagramInputWrap" hidden>
+                <label for="instagramHandle" class="sr-only">Instagram handle</label>
+                <input id="instagramHandle" name="instagramHandle" type="text" placeholder="@yourbrand" />
+              </div>
+              <p class="helper">Choose one and enter the relevant link or handle.</p>
+            </fieldset>
 
             <label for="countryCity">Country / City</label>
-            <input id="countryCity" name="countryCity" type="text" />
+            <input id="countryCity" name="countryCity" type="text" list="citySuggestions" placeholder="Start typing a city" />
+            <datalist id="citySuggestions">
+              <option value="Lagos"></option>
+              <option value="London"></option>
+              <option value="New York"></option>
+              <option value="Los Angeles"></option>
+              <option value="Toronto"></option>
+              <option value="Johannesburg"></option>
+              <option value="Accra"></option>
+              <option value="Paris"></option>
+              <option value="Nairobi"></option>
+            </datalist>
 
             <label for="yearEstablished">Year Established</label>
             <input id="yearEstablished" name="yearEstablished" type="number" inputmode="numeric" min="1000" max="9999" />
@@ -178,6 +216,7 @@
             <label for="additionalNotes">Additional notes or questions</label>
             <textarea id="additionalNotes" name="additionalNotes" rows="4"></textarea>
           </section>
+
 
           <div class="actions">
             <button type="button" id="backBtn" class="ghost" disabled>Back</button>
