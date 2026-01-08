@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1715 Collective Brand Application</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">1715 Collective</p>
+        <h1>Brand Registration Application</h1>
+        <p class="lede">
+          Apply to join the 1715 Collective. Estimated completion time: <strong>3–5 minutes</strong>.
+        </p>
+      </header>
+
+      <section class="card" aria-live="polite">
+        <div class="progress" role="group" aria-label="Application progress">
+          <div class="progress-bar" aria-hidden="true">
+            <span class="progress-fill" id="progressFill"></span>
+          </div>
+          <div class="progress-meta">
+            <span id="progressLabel">Step 1 of 7</span>
+            <span id="sectionLabel">Brand Information</span>
+          </div>
+        </div>
+
+        <form id="applicationForm" novalidate>
+          <section class="form-step" data-step="1">
+            <h2>Section 1 — Brand Information</h2>
+
+            <label for="brandName">Brand Name<span class="req">*</span></label>
+            <input id="brandName" name="brandName" type="text" minlength="2" required />
+            <p class="field-error" data-error-for="brandName"></p>
+
+            <label for="websiteOrInstagram">Website or Instagram<span class="req">*</span></label>
+            <input id="websiteOrInstagram" name="websiteOrInstagram" type="text" required />
+            <p class="helper">Enter a URL or an Instagram handle (e.g. @brand).</p>
+            <p class="field-error" data-error-for="websiteOrInstagram"></p>
+
+            <label for="countryCity">Country / City</label>
+            <input id="countryCity" name="countryCity" type="text" />
+
+            <label for="yearEstablished">Year Established</label>
+            <input id="yearEstablished" name="yearEstablished" type="number" inputmode="numeric" min="1000" max="9999" />
+            <p class="field-error" data-error-for="yearEstablished"></p>
+
+            <label for="primaryContact">Primary Contact Name</label>
+            <input id="primaryContact" name="primaryContact" type="text" />
+
+            <label for="contactEmail">Contact Email<span class="req">*</span></label>
+            <input id="contactEmail" name="contactEmail" type="email" required />
+            <p class="field-error" data-error-for="contactEmail"></p>
+          </section>
+
+          <section class="form-step" data-step="2" hidden>
+            <h2>Section 2 — Brand Identity &amp; Alignment</h2>
+
+            <fieldset>
+              <legend>Brand Category (select all that apply)</legend>
+              <label class="check"><input type="checkbox" name="brandCategory" value="Streetwear" />Streetwear</label>
+              <label class="check"><input type="checkbox" name="brandCategory" value="Jewelry / Accessories" />Jewelry / Accessories</label>
+              <label class="check"><input type="checkbox" name="brandCategory" value="Lifestyle" />Lifestyle</label>
+              <label class="check"><input type="checkbox" name="brandCategory" value="Art / Design" />Art / Design</label>
+              <label class="check"><input type="checkbox" name="brandCategory" value="Other" id="brandCategoryOther" />Other</label>
+              <input id="brandCategoryOtherText" name="brandCategoryOtherText" type="text" placeholder="Please specify" hidden />
+            </fieldset>
+
+            <label for="brandDescription">
+              Brief Brand Description<span class="req">*</span>
+            </label>
+            <textarea id="brandDescription" name="brandDescription" rows="4" maxlength="500" required
+              placeholder="Share a short overview of your brand story and mission."></textarea>
+            <div class="counter" data-counter-for="brandDescription">0 / 500</div>
+            <p class="field-error" data-error-for="brandDescription"></p>
+
+            <label for="brandDistinct">
+              What makes your brand distinct?<span class="req">*</span>
+            </label>
+            <textarea id="brandDistinct" name="brandDistinct" rows="4" maxlength="500" required
+              placeholder="Highlight what sets you apart (materials, process, point of view)."></textarea>
+            <div class="counter" data-counter-for="brandDistinct">0 / 500</div>
+            <p class="field-error" data-error-for="brandDistinct"></p>
+
+            <label for="brandWhy">
+              Why do you want to be part of The 1715 Collective?<span class="req">*</span>
+            </label>
+            <textarea id="brandWhy" name="brandWhy" rows="4" maxlength="500" required
+              placeholder="Share why this collective is the right fit for your brand."></textarea>
+            <div class="counter" data-counter-for="brandWhy">0 / 500</div>
+            <p class="field-error" data-error-for="brandWhy"></p>
+          </section>
+
+          <section class="form-step" data-step="3" hidden>
+            <h2>Section 3 — Products &amp; Showcase</h2>
+
+            <label for="productsShowcase">Products to be showcased<span class="req">*</span></label>
+            <textarea id="productsShowcase" name="productsShowcase" rows="4" required
+              placeholder="List the products or collections you plan to showcase."></textarea>
+            <p class="field-error" data-error-for="productsShowcase"></p>
+
+            <label for="priceRange">Average price range<span class="req">*</span></label>
+            <input id="priceRange" name="priceRange" type="text" required placeholder="$40–$120" />
+            <p class="field-error" data-error-for="priceRange"></p>
+
+            <label for="skuCount">Approx. number of SKUs<span class="req">*</span></label>
+            <input id="skuCount" name="skuCount" type="number" min="1" step="1" required />
+            <p class="field-error" data-error-for="skuCount"></p>
+          </section>
+
+          <section class="form-step" data-step="4" hidden>
+            <h2>Section 4 — Participation &amp; Logistics</h2>
+
+            <fieldset>
+              <legend>Attendance</legend>
+              <label class="check"><input type="radio" name="attendance" value="Yes" required />Yes</label>
+              <label class="check"><input type="radio" name="attendance" value="Possibly" />Possibly</label>
+              <label class="check"><input type="radio" name="attendance" value="No (interested in remote participation)" />No (interested in remote participation)</label>
+            </fieldset>
+            <p class="field-error" data-error-for="attendance"></p>
+
+            <fieldset>
+              <legend>Requirements</legend>
+              <label class="check"><input type="checkbox" name="requirements" value="Table" />Table</label>
+              <label class="check"><input type="checkbox" name="requirements" value="Clothing rack" />Clothing rack</label>
+              <label class="check"><input type="checkbox" name="requirements" value="Power access" />Power access</label>
+              <label class="check"><input type="checkbox" name="requirements" value="Wall space" />Wall space</label>
+              <label class="check"><input type="checkbox" name="requirements" value="None / Other" id="requirementsOther" />None / Other</label>
+              <input id="requirementsOtherText" name="requirementsOtherText" type="text" placeholder="Please specify" hidden />
+            </fieldset>
+
+            <div class="notice">BRANDS ARE RESPONSIBLE FOR THEIR BRANDING DESIGNS AND SETUP</div>
+          </section>
+
+          <section class="form-step" data-step="5" hidden>
+            <h2>Section 5 — Package Selection</h2>
+
+            <fieldset>
+              <legend>Package Type</legend>
+              <label class="check"><input type="radio" name="packageType" value="Standard Showcase" required />Standard Showcase</label>
+            </fieldset>
+            <p class="field-error" data-error-for="packageType"></p>
+          </section>
+
+          <section class="form-step" data-step="6" hidden>
+            <h2>Section 6 — Promotion &amp; Content</h2>
+
+            <fieldset>
+              <legend>Open to pre-event feature?<span class="req">*</span></legend>
+              <label class="check"><input type="radio" name="preEventFeature" value="Yes" required />Yes</label>
+              <label class="check"><input type="radio" name="preEventFeature" value="No" />No</label>
+            </fieldset>
+            <p class="field-error" data-error-for="preEventFeature"></p>
+
+            <label for="brandInstagram">Brand Instagram Handle<span class="req">*</span></label>
+            <input id="brandInstagram" name="brandInstagram" type="text" required placeholder="@yourbrand" />
+            <p class="field-error" data-error-for="brandInstagram"></p>
+
+            <label for="followerCount">Follower Count <span class="muted">(optional)</span></label>
+            <div class="inline">
+              <input id="followerCount" name="followerCount" type="number" min="0" step="1" />
+              <span class="tooltip" aria-label="Follower count helps us plan promotion and is not a selection factor." tabindex="0">?</span>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="7" hidden>
+            <h2>Section 7 — Final Confirmation</h2>
+
+            <label class="check">
+              <input type="checkbox" id="acknowledgement" name="acknowledgement" required />
+              I acknowledge that The 1715 Collective is curated and that all applications are subject to selection.
+              <span class="req">*</span>
+            </label>
+            <p class="field-error" data-error-for="acknowledgement"></p>
+
+            <label for="additionalNotes">Additional notes or questions</label>
+            <textarea id="additionalNotes" name="additionalNotes" rows="4"></textarea>
+          </section>
+
+          <div class="actions">
+            <button type="button" id="backBtn" class="ghost" disabled>Back</button>
+            <button type="button" id="nextBtn">Next</button>
+            <button type="submit" id="submitBtn" class="primary" hidden>Submit Application</button>
+          </div>
+        </form>
+
+        <section id="confirmation" class="confirmation" hidden>
+          <div class="checkmark" aria-hidden="true"></div>
+          <p>Thank you for applying to The 1715 Collective.</p>
+          <p>
+            Our team will review submissions and follow up with selected brands regarding next steps, pricing, and participation details.
+          </p>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
